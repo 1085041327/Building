@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星痕共鸣配装器V1</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>星痕共鸣配装器</h1>
+            <p class="subtitle">本工具用于星痕共鸣装备数值计算</p>
+            <p class="subtitle">By Aerame</p>
+        </header>
+
+        <div class="toolbar">
+            <button id="save-config" class="btn-primary">💾 保存方案</button>
+            <button id="load-config" class="btn-secondary">📂 加载方案</button>
+            <button id="export-config" class="btn-secondary">📤 导出数据</button>
+            <button id="import-config" class="btn-secondary">📥 导入数据</button>
+            <button id="reset-config" class="btn-danger">🔄 重置全部</button>
+            <button id="toggle-theme" class="btn-secondary">🌙 切换主题</button>
+            <button type="button" class="btn-secondary" onclick="location.href='./help.html'">❓ 使用帮助</button>
+        </div>
+
+        <!-- 装备网格 - 放在最前面 -->
+        <div class="equipment-grid">
+            <!-- 武器 (有6个属性框) -->
+            <div class="equipment-card" data-slot="weapon">
+                <div class="card-header">
+                    <h3>⚔️ 武器</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" class="enable-slot" checked>
+                        <span>启用</span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="attr-input-group">
+                        <div class="attr-input">
+                            <label>属性1</label>
+                            <select class="attr1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>属性2</label>
+                            <select class="attr2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr2-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>重铸</label>
+                            <select class="reforge-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="reforge-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>镶嵌</label>
+                            <select class="inlay-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="inlay-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input extra">
+                            <label>额外1</label>
+                            <select class="extra1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="extra1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input extra">
+                            <label>额外2</label>
+                            <select class="extra2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="extra2-value" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 其他装备部位 (各有4个属性框) -->
+            <div class="equipment-card" data-slot="head">
+                <div class="card-header">
+                    <h3>👑 头部</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" class="enable-slot" checked>
+                        <span>启用</span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="attr-input-group">
+                        <div class="attr-input">
+                            <label>属性1</label>
+                            <select class="attr1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>属性2</label>
+                            <select class="attr2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr2-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>重铸</label>
+                            <select class="reforge-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="reforge-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>镶嵌</label>
+                            <select class="inlay-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="inlay-value" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card" data-slot="cloth">
+                <div class="card-header">
+                    <h3>👔 衣服</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" class="enable-slot" checked>
+                        <span>启用</span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="attr-input-group">
+                        <div class="attr-input">
+                            <label>属性1</label>
+                            <select class="attr1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>属性2</label>
+                            <select class="attr2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr2-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>重铸</label>
+                            <select class="reforge-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="reforge-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>镶嵌</label>
+                            <select class="inlay-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="inlay-value" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card" data-slot="glove">
+                <div class="card-header">
+                    <h3>🧤 护手</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" class="enable-slot" checked>
+                        <span>启用</span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="attr-input-group">
+                        <div class="attr-input">
+                            <label>属性1</label>
+                            <select class="attr1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>属性2</label>
+                            <select class="attr2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr2-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>重铸</label>
+                            <select class="reforge-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="reforge-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>镶嵌</label>
+                            <select class="inlay-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="inlay-value" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card" data-slot="shoes">
+                <div class="card-header">
+                    <h3>👢 鞋子</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" class="enable-slot" checked>
+                        <span>启用</span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="attr-input-group">
+                        <div class="attr-input">
+                            <label>属性1</label>
+                            <select class="attr1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>属性2</label>
+                            <select class="attr2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr2-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>重铸</label>
+                            <select class="reforge-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="reforge-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>镶嵌</label>
+                            <select class="inlay-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="inlay-value" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card" data-slot="earring">
+                <div class="card-header">
+                    <h3>💎 耳坠</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" class="enable-slot" checked>
+                        <span>启用</span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="attr-input-group">
+                        <div class="attr-input">
+                            <label>属性1</label>
+                            <select class="attr1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>属性2</label>
+                            <select class="attr2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr2-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>重铸</label>
+                            <select class="reforge-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="reforge-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>镶嵌</label>
+                            <select class="inlay-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="inlay-value" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card" data-slot="necklace">
+                <div class="card-header">
+                    <h3>📿 项链</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" class="enable-slot" checked>
+                        <span>启用</span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="attr-input-group">
+                        <div class="attr-input">
+                            <label>属性1</label>
+                            <select class="attr1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>属性2</label>
+                            <select class="attr2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr2-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>重铸</label>
+                            <select class="reforge-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="reforge-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>镶嵌</label>
+                            <select class="inlay-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="inlay-value" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card" data-slot="ring">
+                <div class="card-header">
+                    <h3>💍 戒指</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" class="enable-slot" checked>
+                        <span>启用</span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="attr-input-group">
+                        <div class="attr-input">
+                            <label>属性1</label>
+                            <select class="attr1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>属性2</label>
+                            <select class="attr2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr2-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>重铸</label>
+                            <select class="reforge-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="reforge-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>镶嵌</label>
+                            <select class="inlay-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="inlay-value" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card" data-slot="left-bracelet">
+                <div class="card-header">
+                    <h3>⭕ 左手环</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" class="enable-slot" checked>
+                        <span>启用</span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="attr-input-group">
+                        <div class="attr-input">
+                            <label>属性1</label>
+                            <select class="attr1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>属性2</label>
+                            <select class="attr2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr2-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>重铸</label>
+                            <select class="reforge-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="reforge-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>镶嵌</label>
+                            <select class="inlay-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="inlay-value" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card" data-slot="right-bracelet">
+                <div class="card-header">
+                    <h3>⭕ 右手环</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" class="enable-slot" checked>
+                        <span>启用</span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="attr-input-group">
+                        <div class="attr-input">
+                            <label>属性1</label>
+                            <select class="attr1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>属性2</label>
+                            <select class="attr2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr2-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>重铸</label>
+                            <select class="reforge-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="reforge-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>镶嵌</label>
+                            <select class="inlay-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="inlay-value" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="equipment-card" data-slot="armguard">
+                <div class="card-header">
+                    <h3>🛡️ 护符</h3>
+                    <label class="toggle-label">
+                        <input type="checkbox" class="enable-slot" checked>
+                        <span>启用</span>
+                    </label>
+                </div>
+                <div class="card-body">
+                    <div class="attr-input-group">
+                        <div class="attr-input">
+                            <label>属性1</label>
+                            <select class="attr1-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr1-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>属性2</label>
+                            <select class="attr2-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="attr2-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>重铸</label>
+                            <select class="reforge-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="reforge-value" value="0" min="0">
+                        </div>
+                        <div class="attr-input">
+                            <label>镶嵌</label>
+                            <select class="inlay-type">
+                                <option value="crit">暴击</option>
+                                <option value="haste">急速</option>
+                                <option value="luck">幸运</option>
+                                <option value="mastery">精通</option>
+                                <option value="versatility">全能</option>
+                            </select>
+                            <input type="number" class="inlay-value" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 词条额外配置 - 放在属性统计前面 -->
+        <div class="percent-config">
+            <h2>词条额外配置</h2>
+            <div class="percent-grid">
+                <div class="percent-item">
+                    <div class="percent-header">
+                        <span class="percent-icon">⚡</span>
+                        <span class="percent-name">暴击</span>
+                    </div>
+                    <div class="percent-inputs">
+                        <div class="input-group">
+                            <label>固定值</label>
+                            <input type="number" id="crit-fixed-value" value="0" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>固定%</label>
+                            <input type="number" id="crit-fixed-percent" value="5" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>值提升%</label>
+                            <input type="number" id="crit-value-boost" value="0" step="0.1" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>总体提升%</label>
+                            <input type="number" id="crit-total-boost" value="0" step="0.1" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="percent-item">
+                    <div class="percent-header">
+                        <span class="percent-icon">🚀</span>
+                        <span class="percent-name">急速</span>
+                    </div>
+                    <div class="percent-inputs">
+                        <div class="input-group">
+                            <label>固定值</label>
+                            <input type="number" id="haste-fixed-value" value="0" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>固定%</label>
+                            <input type="number" id="haste-fixed-percent" value="0" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>值提升%</label>
+                            <input type="number" id="haste-value-boost" value="0" step="0.1" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>总体提升%</label>
+                            <input type="number" id="haste-total-boost" value="0" step="0.1" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="percent-item">
+                    <div class="percent-header">
+                        <span class="percent-icon">🍀</span>
+                        <span class="percent-name">幸运</span>
+                    </div>
+                    <div class="percent-inputs">
+                        <div class="input-group">
+                            <label>固定值</label>
+                            <input type="number" id="luck-fixed-value" value="0" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>固定%</label>
+                            <input type="number" id="luck-fixed-percent" value="0" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>值提升%</label>
+                            <input type="number" id="luck-value-boost" value="0" step="0.1" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>总体提升%</label>
+                            <input type="number" id="luck-total-boost" value="0" step="0.1" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="percent-item">
+                    <div class="percent-header">
+                        <span class="percent-icon">🎯</span>
+                        <span class="percent-name">精通</span>
+                    </div>
+                    <div class="percent-inputs">
+                        <div class="input-group">
+                            <label>固定值</label>
+                            <input type="number" id="mastery-fixed-value" value="0" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>固定%</label>
+                            <input type="number" id="mastery-fixed-percent" value="0" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>值提升%</label>
+                            <input type="number" id="mastery-value-boost" value="0" step="0.1" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>总体提升%</label>
+                            <input type="number" id="mastery-total-boost" value="0" step="0.1" min="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="percent-item">
+                    <div class="percent-header">
+                        <span class="percent-icon">⭐</span>
+                        <span class="percent-name">全能</span>
+                    </div>
+                    <div class="percent-inputs">
+                        <div class="input-group">
+                            <label>固定值</label>
+                            <input type="number" id="versatility-fixed-value" value="0" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>固定%</label>
+                            <input type="number" id="versatility-fixed-percent" value="0" step="0.1">
+                        </div>
+                        <div class="input-group">
+                            <label>值提升%</label>
+                            <input type="number" id="versatility-value-boost" value="0" step="0.1" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label>总体提升%</label>
+                            <input type="number" id="versatility-total-boost" value="0" step="0.1" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 属性统计面板 - 横向一排 -->
+        <div class="stats-panel">
+            <h2>属性统计</h2>
+            <div class="stats-row">
+                <div class="stat-card" data-attr="crit">
+                    <div class="stat-icon">⚡</div>
+                    <div class="stat-name">暴击</div>
+                    <div class="stat-final" data-value="crit-final">5.00%</div>
+                    <button class="stat-detail-btn">查看详情</button>
+                </div>
+
+                <div class="stat-card" data-attr="haste">
+                    <div class="stat-icon">🚀</div>
+                    <div class="stat-name">急速</div>
+                    <div class="stat-final" data-value="haste-final">0.00%</div>
+                    <button class="stat-detail-btn">查看详情</button>
+                </div>
+
+                <div class="stat-card" data-attr="luck">
+                    <div class="stat-icon">🍀</div>
+                    <div class="stat-name">幸运</div>
+                    <div class="stat-final" data-value="luck-final">0.00%</div>
+                    <button class="stat-detail-btn">查看详情</button>
+                </div>
+
+                <div class="stat-card" data-attr="mastery">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-name">精通</div>
+                    <div class="stat-final" data-value="mastery-final">0.00%</div>
+                    <button class="stat-detail-btn">查看详情</button>
+                </div>
+
+                <div class="stat-card" data-attr="versatility">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-name">全能</div>
+                    <div class="stat-final" data-value="versatility-final">0.00%</div>
+                    <button class="stat-detail-btn">查看详情</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 计算详情弹窗 -->
+        <div id="detail-modal" class="modal">
+            <div class="modal-content detail-modal-content">
+                <div class="modal-header">
+                    <h2><span id="detail-attr-icon"></span> <span id="detail-attr-name"></span> 计算详情</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="calc-step">
+                        <h3>📊 数据统计</h3>
+                        <div class="calc-row">
+                            <span class="calc-label">固定值总和：</span>
+                            <span class="calc-value" id="detail-total">0</span>
+                        </div>
+                    </div>
+
+                    <div class="calc-step">
+                        <h3>🔢 第一步：计算获取量</h3>
+                        <div class="calc-formula">
+                            获取量 = 固定值总和 × (1 + 值提升百分比 / 100)
+                        </div>
+                        <div class="calc-row">
+                            <span class="calc-label">固定值总和：</span>
+                            <span class="calc-value" id="detail-total-2">0</span>
+                        </div>
+                        <div class="calc-row">
+                            <span class="calc-label">值提升百分比：</span>
+                            <span class="calc-value" id="detail-value-boost">0%</span>
+                        </div>
+                        <div class="calc-row highlight">
+                            <span class="calc-label">获取量：</span>
+                            <span class="calc-value" id="detail-obtained">0</span>
+                        </div>
+                    </div>
+
+                    <div class="calc-step">
+                        <h3>📈 第二步：转换为百分比</h3>
+                        <div class="calc-formula">
+                            转换百分比 = 获取量 / (获取量 + 19975 or 11200) × 100%
+                        </div>
+                        <div class="calc-row">
+                            <span class="calc-label">获取量：</span>
+                            <span class="calc-value" id="detail-obtained-2">0</span>
+                        </div>
+                        <div class="calc-row highlight">
+                            <span class="calc-label">转换百分比：</span>
+                            <span class="calc-value" id="detail-converted">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="calc-step">
+                        <h3>➕ 第三步：加上固定百分比</h3>
+                        <div class="calc-formula">
+                            中间结果 = 固定百分比 + 转换百分比
+                        </div>
+                        <div class="calc-row">
+                            <span class="calc-label">固定百分比：</span>
+                            <span class="calc-value" id="detail-fixed">0%</span>
+                        </div>
+                        <div class="calc-row">
+                            <span class="calc-label">转换百分比：</span>
+                            <span class="calc-value" id="detail-converted-2">0%</span>
+                        </div>
+                        <div class="calc-row highlight">
+                            <span class="calc-label">中间结果：</span>
+                            <span class="calc-value" id="detail-intermediate">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="calc-step">
+                        <h3>✨ 第四步：应用总体提升</h3>
+                        <div class="calc-formula">
+                            最终百分比 = 中间结果 × (1 + 总体提升百分比 / 100)
+                        </div>
+                        <div class="calc-row">
+                            <span class="calc-label">中间结果：</span>
+                            <span class="calc-value" id="detail-intermediate-2">0%</span>
+                        </div>
+                        <div class="calc-row">
+                            <span class="calc-label">总体提升百分比：</span>
+                            <span class="calc-value" id="detail-total-boost">0%</span>
+                        </div>
+                        <div class="calc-row final-result">
+                            <span class="calc-label">最终百分比：</span>
+                            <span class="calc-value" id="detail-final">0%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 方案管理面板 -->
+        <div id="config-modal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>配装方案管理</h2>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="config-form">
+                        <label>方案名称：</label>
+                        <input type="text" id="config-name" placeholder="输入方案名称">
+                        <button id="save-new-config" class="btn-primary">保存为新方案</button>
+                    </div>
+                    <div class="config-list">
+                        <h3>已保存方案</h3>
+                        <div id="saved-configs"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+</html>
