@@ -90,17 +90,6 @@
 2. 无需安装任何依赖
 3. 数据自动保存在浏览器本地
 
-### GitHub Pages 一键上线（仓库名：`Aerame`）
-1. 将本项目文件上传到 GitHub 仓库根目录（`Aerame`）
-2. 进入仓库 `Settings` -> `Pages`
-3. 在 `Build and deployment` 中选择：
-   - `Source`: `Deploy from a branch`
-   - `Branch`: `main`（或你的默认分支） + `/root`
-4. 保存后等待 1-3 分钟，访问：
-   - `https://<你的GitHub用户名>.github.io/Aerame/`
-5. 以后只要 push 新代码，页面会自动更新
-
-> 提示：本项目已使用相对路径（如 `./styles.css`、`./script.js`），可直接适配仓库子路径部署。
 
 ### 基本操作
 
